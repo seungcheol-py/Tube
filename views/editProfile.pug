@@ -1,2 +1,6 @@
 extends layouts/main
-block content    
+block content
+    .formContainer
+        form(action=routes.editProfile, method="post")
+            label(for="avatar") Avatar
+            input(type="file" id="avatar", name="avatar")
