@@ -10,7 +10,11 @@ export const search = (req, res) => {
     query: { term: searchTerm }
   } = req;
   */
-  res.render("search", { pageTitle: "Search", searchTerm: searchTerm });
+  res.render("search", {
+    pageTitle: "Search",
+    searchTerm: searchTerm,
+    videoFiles
+  });
 };
 // searchTerm (왼쪽) 이라는 변수는 searchTerm(오른쪽)을 의미한다.
 // searchTerm (오른쪽)은 term에 할당된 이름이다.

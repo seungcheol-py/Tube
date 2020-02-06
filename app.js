@@ -15,7 +15,6 @@ app.use(helmet());
 app.set("view engine", "pug");
 app.use(morgan("dev"));
 app.use(cookieParser());
-app.use(bodyParser());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
