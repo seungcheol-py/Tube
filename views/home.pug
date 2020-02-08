@@ -6,6 +6,7 @@ block content
         each item in videoFiles
             //h1=video.title
             +videoBlock({
+                id: item.id,
                 videoFile:item.videoFile,
                 title:item.title,
                 views:item.views

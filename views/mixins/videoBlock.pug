@@ -1,6 +1,7 @@
 mixin videoBlock(video={})
     div.videoBlock
-        video.videoBlock_thumbnail(src=video.videoFile, controls=true)
-        h4.videoBlock_title=video.title
-        h6.videoBlock_views=video.views
-        //우변은 이름을 바꿀 수 있다.
+        a(href=`/videos${routes.videoDetail(video.id)}`)
+            video.videoBlock_thumbnail(src=video.videoFile, controls=true)
+            h4.videoBlock_title=video.title
+            h6.videoBlock_views=video.views
+            //우변은 이름을 바꿀 수 있다.
