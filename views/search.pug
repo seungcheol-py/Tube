@@ -3,11 +3,14 @@ include mixins/videoBlock
 
 block content
     div.searchHeader
-        h3 Search for #{searchTerm}
+        h3=`Search for ${searchTerm}`
     div.searchVideo
-        each item in videoFiles
+        if videos.length === 0
+            h5 No Videos Found
+        each item in videos
             +videoBlock({
-                videoFile:item.videoFile,
-                title:item.title,
-                views:item.views
-            })
+                    id: item.id,
+                    videoFile:item.fileUrl,
+                    title:item.title,
+                    views:item.views
+                    })

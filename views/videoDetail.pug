@@ -1,3 +1,17 @@
 extends layouts/main
+
 block content
-    p="Video Detail"
+    .video_player
+        video(src=`/${designatedVideo.fileUrl}`,controls=true)
+    .video_info
+        a(href=routes.editVideo(designatedVideo.id)) Edit Video
+        h5.video_title=designatedVideo.title
+        h7.video_view=designatedVideo.views        
+        p.video_description=designatedVideo.description
+    .video_comments
+        if designatedVideo.comment.length ===0
+            span.video_comments_number No comment
+        else if designatedVideo.comment.length ===1
+            span.video_comments_number 1 comment
+        else
+            span.video_comments_number= `${designatedVideo.comment.length} comments`
