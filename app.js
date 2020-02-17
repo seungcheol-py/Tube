@@ -23,6 +23,7 @@ app.use(localsMiddleware);
 app.use(routes.home, globalRouter);
 app.use(routes.users, userRouter);
 app.use(routes.videos, videoRouter);
-app.use(routes.upload, express.static("upload"));
+app.use("/upload", express.static("upload"));
+app.use("/static", express.static("static"));
 
 export default app;
