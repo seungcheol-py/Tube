@@ -35,12 +35,69 @@ export const postLogin = passport.authenticate("local", {
 
 export const githubLogin = passport.authenticate("github");
 
-export const githubLoginCallback = (accessToken, refreshToken, profile, cb) => {
-  console.log(accessToken, refreshToken, profile, cb);
+export const githubLoginCallback = async (
+  accessToken,
+  refreshToken,
+  profile,
+  cb
+) => {
+  const {
+    _json: { id, avatar_url, name, email }
+  } = profile;
+  try {
+    const user = await User.findOne({ email });
+    if (user) {
+      user.githubId = id;
+      user.avatarUrl = avatar_url;
+      user.save();
+      return cb(null, user);
+    } else {
+      const newUser = await User.create({
+        name,
+        email,
+        avatarUrl: avatar_url,
+        githubId: id
+      });
+      return cb(null, newUser);
+    }
+  } catch (error) {
+    return cb(error);
+  }
 };
 
 export const postGithubLogin = (req, res) => {
-  res.send(routes.home);
+  res.redirect(routes.home);
+};
+
+export const facebookLogin = passport.authenticate("facebook");
+
+export const facebookLoginCallback = async (_, __, profile, cb) => {
+  const {
+    _json: { id, name, email }
+  } = profile;
+  try {
+    const user = await User.findOne({ email });
+
+    if (user) {
+      user.facebookId = id;
+      user.save();
+      return cb(null, user);
+    } else {
+      const newUser = await User.create({
+        name,
+        email,
+        avatarUrl: `https://graph.facebook.com/${id}/picture?type=large`,
+        facebookId: id
+      });
+      return cb(null, newUser);
+    }
+  } catch (error) {
+    return cb(error);
+  }
+};
+
+export const postFacebookLogin = (req, res) => {
+  res.redirect(routes.home);
 };
 
 export const logout = (req, res) => {
@@ -48,8 +105,21 @@ export const logout = (req, res) => {
   res.redirect(routes.home);
 };
 
-export const userDetail = (req, res) =>
-  res.render("userDetail", { pageTitle: "User Detail" });
+export const getMe = (req, res) => {
+  res.render("userDetail", { pageTitle: "User Detail", user: req.user });
+};
+
+export const userDetail = async (req, res) => {
+  const {
+    params: { id }
+  } = req;
+  try {
+    const user = await User.findById(id);
+    res.render("userDetail", { pageTitle: "User Detail", user });
+  } catch (error) {
+    red.redirect(routes.home);
+  }
+};
 export const editProfile = (req, res) =>
   res.render("editProfile", { pageTitle: "Edit Profile" });
 export const changePassword = (req, res) =>
