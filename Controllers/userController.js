@@ -100,6 +100,69 @@ export const postFacebookLogin = (req, res) => {
   res.redirect(routes.home);
 };
 
+export const kakaoLogin = passport.authenticate("kakao");
+
+export const kakaoLoginCallback = async (_, __, profile, done) => {
+  const {
+    _json: {
+      id,
+      properties: { nickname: name },
+      kakao_account: { email }
+    }
+  } = profile;
+  try {
+    const user = await User.findOne({ email });
+    if (user) {
+      user.kakaoId = id;
+      user.save();
+      return done(null, user);
+    } else {
+      const newUser = await User.create({
+        name,
+        email,
+        kakaoId: id
+      });
+      return done(null, newUser);
+    }
+  } catch (error) {
+    return done(error);
+  }
+};
+
+export const postKakaoLogin = (req, res) => {
+  res.redirect(routes.home);
+};
+
+export const naverLogin = passport.authenticate("naver");
+
+export const naverLoginCallback = async (_, __, profile, done) => {
+  const {
+    displayName: name,
+    _json: { id, email, profile_image: avatarUrl }
+  } = profile;
+  try {
+    const user = await User.findOne({ email });
+    if (user) {
+      user.naverId = id;
+      user.save();
+      return done(null, user);
+    } else {
+      const newUser = await User.create({
+        name,
+        email,
+        naverId: id
+      });
+      return done(null, newUser);
+    }
+  } catch (error) {
+    return done(error);
+  }
+};
+
+export const postNaverLogin = (req, res) => {
+  res.redirect(routes.home);
+};
+
 export const logout = (req, res) => {
   req.logout();
   res.redirect(routes.home);

@@ -22,6 +22,12 @@ const GITHUB_CALLBACK = "/auth/github/callback";
 const FACEBOOK = "/auth/facebook";
 const FACEBOOK_CALLBACK = "/auth/facebook/callback";
 
+const KAKAO = "/auth/kakao";
+const KAKAO_CALLBACK = "/auth/kakao/callback";
+
+const NAVER = "/auth/naver";
+const NAVER_CALLBACK = "/auth/naver/callback";
+
 const routes = {
   home: HOME,
   join: JOIN,
@@ -65,7 +71,11 @@ const routes = {
   gitHub: GITHUB,
   githubCallback: GITHUB_CALLBACK,
   facebook: FACEBOOK,
-  facebookCallback: FACEBOOK_CALLBACK
+  facebookCallback: FACEBOOK_CALLBACK,
+  kakao: KAKAO,
+  kakaoCallback: KAKAO_CALLBACK,
+  naver: NAVER,
+  naverCallback: NAVER_CALLBACK
 };
 
 export default routes;
