@@ -33,9 +33,11 @@ export const postUpload = async (req, res) => {
   const newVideo = await Video.create({
     fileUrl: PATH,
     title: req.body.title,
-    description: req.body.description
+    description: req.body.description,
+    creator: req.user.id
   });
-  console.log(newVideo);
+  req.user.videos.push(newVideo.id);
+  req.user.save();
   res.redirect(routes.videoDetail(newVideo.id));
 };
 
@@ -44,7 +46,7 @@ export const videoDetail = async (req, res) => {
     params: { id }
   } = req;
   try {
-    const designatedVideo = await Video.findById(id);
+    const designatedVideo = await Video.findById(id).populate("creator");
     res.render("videoDetail", {
       pageTitle: designatedVideo.title,
       designatedVideo
@@ -61,10 +63,14 @@ export const getEditVideo = async (req, res) => {
   } = req;
   try {
     const designatedVideo = await Video.findById(id);
-    res.render("editVideo", {
-      pageTitle: `Edit ${designatedVideo.title}`,
-      designatedVideo
-    });
+    if (String(designatedVideo.creator) !== req.user.id) {
+      throw Error();
+    } else {
+      res.render("editVideo", {
+        pageTitle: `Edit ${designatedVideo.title}`,
+        designatedVideo
+      });
+    }
   } catch (error) {
     res.redirect(routes.home);
   }

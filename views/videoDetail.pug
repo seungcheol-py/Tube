@@ -1,12 +1,15 @@
 extends layouts/main
+include mixins/videoPlayer
 
 block content
     .video-detail_container
-        .video_player
-            video(src=`/${designatedVideo.fileUrl}`,controls=true)
+        +videoPlayer({
+            src: `/${designatedVideo.fileUrl}`
+        })
         .video_info
-            a(href=routes.editVideo(designatedVideo.id))
-                button Edit Video
+            if loggedUser && (designatedVideo.creator.id === loggedUser.id)
+                a(href=routes.editVideo(designatedVideo.id))
+                    button Edit Video
             h5.video_title=designatedVideo.title
             h7.video_views=designatedVideo.views        
             p.video_description=designatedVideo.description
@@ -14,6 +17,9 @@ block content
                 span.video_views 1 view
             else
                 span.video_views= `${designatedVideo.views} views`
+            .video_author
+                |Uploaded by 
+                a(href=routes.userDetail(designatedVideo.creator.id))=designatedVideo.creator.name
         .video_comments
             if designatedVideo.comment.length ===0
                 span.video_comments_number No comment
