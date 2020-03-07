@@ -6,6 +6,7 @@
     }
   }
   video {
+    background-color: black;
     max-height: 1000px;
     max-width: auto;
     width: 100%;
@@ -56,8 +57,23 @@
     justify-self: end;
   }
   .videoPlayer__column:nth-child(2) {
-    justify-self: center;
+    display: inline-flex;
+    span {
+      justify-self: start;
+      margin-right: 10px;
+    }
+    .jsPlayerBoxOutside {
+      background-color: rgba(0, 0, 0, 0.7);
+      width: 300px;
+      height: 24.8px;
+      .jsPlayerBoxInside {
+        background-color: white;
+        width: 0px;
+        height: 24.8px;
+      }
+    }
   }
+  //직접 만들었다.
   i {
     font-size: 25px;
     cursor: pointer;
