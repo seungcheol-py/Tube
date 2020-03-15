@@ -11,7 +11,6 @@ block content
                 a(href=routes.editVideo(designatedVideo.id))
                     button Edit Video
             h5.video_title=designatedVideo.title
-            h7.video_views=designatedVideo.views        
             p.video_description=designatedVideo.description
             if designatedVideo.views === 1
                 span.video_views 1 view
@@ -22,8 +21,25 @@ block content
                 a(href=routes.userDetail(designatedVideo.creator.id))=designatedVideo.creator.name
         .video_comments
             if designatedVideo.comment.length ===0
-                span.video_comments_number No comment
+                span.video_comments_number#jsCommentNumber 0
+                |   comment
             else if designatedVideo.comment.length ===1
-                span.video_comments_number 1 comment
+                span.video_comments_number#jsCommentNumber 1
+                |   comment
             else
-                span.video_comments_number= `${designatedVideo.comment.length} comments`
+                span.video_comments_number#jsCommentNumber=designatedVideo.comment.length
+                |   comments
+                //- 이렇게 하면 .video_comments_number를 통해서 js가 숫자만 얻을 수 있다.
+            if loggedUser
+                div.userName#jsUserName=loggedUser.name    
+                form.add_comment#jsAddComment
+                    input(type="text", placeholder="Add a comment", name="comment")
+            ul.video_comment-list#jsCommentList
+                each comment in designatedVideo.comment.reverse()
+                    li
+                        span=`${comment.creator.name} : ${comment.text}`
+                    if loggedUser && (comment.creator.id === loggedUser.id)
+                        //- mongoDB에 저장되면서 할당받은 id를 의미한다.
+                        button.delete_commment#jsDeleteComment X
+                        div#jsCommentId=comment.id
+                        //- opacity: 0 //- div is for getting comment.id
