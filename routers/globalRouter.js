@@ -38,28 +38,39 @@ globalRouter.get(routes.me, getMe);
 globalRouter.get(routes.gitHub, githubLogin);
 globalRouter.get(
   routes.githubCallback,
-  passport.authenticate("github", { failureRedirect: "/login" }),
+  passport.authenticate("github", {
+    failureRedirect: "/login",
+    successFlash: "Welcome"
+  }),
   postGithubLogin
 );
 
 globalRouter.get(routes.facebook, facebookLogin);
 globalRouter.get(
   routes.facebookCallback,
-  passport.authenticate("facebook", { failureMessage: "/login" }),
+  passport.authenticate("facebook", {
+    failureMessage: "/login",
+    successFlash: "Welcome"
+  }),
   postFacebookLogin
 );
-
 globalRouter.get(routes.kakao, kakaoLogin);
 globalRouter.get(
   routes.kakaoCallback,
-  passport.authenticate("kakao", { failureRedirect: "/login" }),
+  passport.authenticate("kakao", {
+    failureRedirect: "/login",
+    successFlash: "Welcome"
+  }),
   postKakaoLogin
 );
 
 globalRouter.get(routes.naver, naverLogin);
 globalRouter.get(
   routes.naverCallback,
-  passport.authenticate("naver", { failureRedirect: "/login" }),
+  passport.authenticate("naver", {
+    failureRedirect: "/login",
+    successFlash: "Welcome"
+  }),
   postNaverLogin
 );
 

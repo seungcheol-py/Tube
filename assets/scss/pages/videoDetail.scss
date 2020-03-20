@@ -36,6 +36,7 @@
   .video_comments {
     margin-top: 25px;
     text-align: center;
+    width: 250px;
     .video_comments_number {
       font-size: 18px;
     }
@@ -58,6 +59,14 @@
         width: 100%;
       }
     }
+    button {
+      position: relative;
+      top: -30px;
+      right: -200px;
+      background-color: $black;
+      width: 120px;
+      height: 30px;
+    }
   }
   .video_comment-list {
     margin-top: 20px;
@@ -79,11 +88,8 @@
       align-items: center;
       position: relative;
       top: -45px;
-      right: -140px;
+      right: -160px;
       padding: 7px;
-    }
-    div {
-      opacity: 0;
     }
   }
 }

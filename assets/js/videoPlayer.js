@@ -86,7 +86,6 @@ const formatDate = seconds => {
 };
 
 function setTotalTime() {
-  console.log(videoPlayer.currentTime);
   totalTime.innerHTML = formatDate(videoPlayer.duration);
   setInterval(getCurrentTime, 500);
 }
@@ -127,7 +126,6 @@ function boxStarting() {
 
 function handleBoxClick(event) {
   const { offsetX } = event;
-  console.log(offsetX);
   value = offsetX / 300;
   videoPlayer.currentTime = videoPlayer.duration * value;
 }

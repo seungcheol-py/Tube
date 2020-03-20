@@ -34,12 +34,12 @@ block content
                 div.userName#jsUserName=loggedUser.name    
                 form.add_comment#jsAddComment
                     input(type="text", placeholder="Add a comment", name="comment")
+                    button#commentBtn Submit
+                    //- button을 form tag 내부에 두어야 클릭했을 때 submit이 된다.
             ul.video_comment-list#jsCommentList
                 each comment in designatedVideo.comment.reverse()
                     li
                         span=`${comment.creator.name} : ${comment.text}`
                     if loggedUser && (comment.creator.id === loggedUser.id)
                         //- mongoDB에 저장되면서 할당받은 id를 의미한다.
-                        button.delete_commment#jsDeleteComment X
-                        div#jsCommentId=comment.id
-                        //- opacity: 0 //- div is for getting comment.id
+                        button.delete_comment(id=comment.id) X

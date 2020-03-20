@@ -132,6 +132,9 @@ export const postAddComment = async (req, res) => {
     });
     video.comment.push(newComment.id);
     video.save();
+    res.send({
+      commentId: newComment.id
+    });
   } catch (error) {
     res.status(400);
   } finally {
@@ -145,7 +148,6 @@ export const postDeleteComment = async (req, res) => {
     body: { videoId }
   } = req;
   try {
-    console.log(id);
     await Comment.findByIdAndRemove(id);
     const video = await Video.findById(videoId);
     video.comment.remove(id);
